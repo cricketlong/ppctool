@@ -1,0 +1,19 @@
+Full table:<br>
+<table border="1">
+<tr>
+    <th>campaign</th>
+    <th>ad group</th>
+    <th>keyword</th>
+    <th>bid</th>
+</tr>
+{% if keywords %}
+    {% for k in keywords %}
+    <tr>
+        <td>{{ k.campaign.name }}</td>
+        <td>{{ k.ad_group.name }}</td>
+        <td>{{ k.name }}</td>
+        <td>{{ k.bid }}</td>
+    </tr>
+    {% endfor %}
+{% endif %}
+</table>

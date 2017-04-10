@@ -1,0 +1,23 @@
+<a href="">full table</a><br>
+<form action="{% url 'index' %}" method="post">
+<input type="text" name="keyword">&nbsp;<input type="submit" value="search">
+{% csrf_token %}
+{% if results %}
+    <table border="1">
+    <tr>
+        <th>campaign</th>
+        <th>ad group</th>
+        <th>keyword</th>
+        <th>bid</th>
+    </tr>
+    {% for r in results %}
+        <tr>
+            <td>{{ r.campaign.name }}</td>
+            <td>{{ r.ad_group.name }}</td>
+            <td>{{ r.name }}</td>
+            <td>{{ r.bid }}</td>
+        </tr>
+    {% endfor %}
+    </table>
+{% endif %}
+</form>
