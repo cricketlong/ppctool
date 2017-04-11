@@ -13,6 +13,7 @@ class AdGroup(models.Model):
 
     id = models.IntegerField(primary_key = True, default = 0)
     name = models.CharField(max_length = 255)
+    campaign = models.ForeignKey(Campaign)
 
 class Keyword(models.Model):
     class Meta:
@@ -20,6 +21,9 @@ class Keyword(models.Model):
 
     id = models.IntegerField(primary_key = True, default = 0)
     campaign = models.ForeignKey(Campaign)
-    ad_group = models.ForeignKey(AdGroup)
+    adgroup = models.ForeignKey(AdGroup)
     name = models.CharField(max_length = 255)
     bid = models.FloatField(default=0.0)
+    impressions = models.IntegerField(default=0.0)
+    clicks = models.IntegerField(default=0.0)
+    order_amount_first_month = models.FloatField(default=0.0)

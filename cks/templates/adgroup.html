@@ -1,0 +1,17 @@
+<a href="{% url 'index' %}">index</a>
+{% if campaign %} - <a href="{% url 'campaign' campaign.id %}">{{ campaign.name }}</a>{% endif %}
+{% if adgroup %} > <a href="{% url 'adgroup' campaign.id adgroup.id %}">{{ adgroup.name }}</a>{% endif %}
+<br>
+{% if keywords %}
+    <br>
+    <table border="1">
+    <tr>
+        <th>keyword</th>
+    </tr>
+    {% for k in keywords %}
+        <tr>
+            <td><a href="{% url 'keyword' k.campaign.id k.adgroup.id k.id %}">{{ k.name }}</a></td>
+        </tr>
+    {% endfor %}
+    </table>
+{% endif %}

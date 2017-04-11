@@ -1,0 +1,42 @@
+<a href="{% url 'index' %}">index</a>
+{% if campaign %} - <a href="{% url 'campaign' campaign.id %}">{{ campaign.name }}</a>{% endif %}
+{% if adgroup %} &gt; <a href="{% url 'adgroup' campaign.id adgroup.id %}">{{ adgroup.name }}</a>{% endif %}
+{% if keyword %} &gt; {{ adgroup.name }}{% endif %}
+<br>
+{% if keyword %}
+    <br>
+    <table border="1">
+    <tr>
+        <td>campaign</td>
+        <td>ad group</td>
+        <td>keyword</td>
+        <td>bid</td>
+        <td>impressions</td>
+        <td>clicks</td>
+        <td>order_amount_first_month</td>
+    </tr>
+    <tr style="background-color:grey">
+        <td>{{ campaign.name }}</td>
+        <td>{{ adgroup.name }}</td>
+        <td>{{ keyword.name }}</td>
+        <td>{{ keyword.bid }}</td>
+        <td>{{ keyword.impressions }}</td>
+        <td>{{ keyword.clicks }}</td>
+        <td>{{ keyword.order_amount_first_month }}</td>
+    </tr>
+    {% if related_keywords %}
+        {% for k in related_keywords %}
+            <tr>
+                <td>{{ k.campaign.name }}</td>
+                <td>{{ k.adgroup.name }}</td>
+                <td><a href="{% url 'keyword' k.campaign.id k.adgroup.id k.id %}">{{ k.name }}</a></td>
+                <td>{{ k.bid }}</td>
+                <td>{{ k.impressions }}</td>
+                <td>{{ k.clicks }}</td>
+                <td>{{ k.order_amount_first_month }}</td>
+            </tr>
+        {% endfor %}
+    {% endif %}
+    </table>
+{% endif %}
+
