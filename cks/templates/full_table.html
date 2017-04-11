@@ -1,19 +1,29 @@
-Full table:<br>
-<table border="1">
-<tr>
-    <th>campaign</th>
-    <th>ad group</th>
-    <th>keyword</th>
-    <th>bid</th>
-</tr>
+<a href="{% url 'index' %}">index</a>
+- full_table
+<br>
 {% if keywords %}
-    {% for k in keywords %}
+    <br>
+    <table border="1">
     <tr>
-        <td>{{ k.campaign.name }}</td>
-        <td>{{ k.ad_group.name }}</td>
-        <td>{{ k.name }}</td>
-        <td>{{ k.bid }}</td>
+        <td>campaign</td>
+        <td>ad group</td>
+        <td>keyword</td>
+        <td>bid</td>
+        <td>impressions</td>
+        <td>clicks</td>
+        <td>order_amount_first_month</td>
     </tr>
+    {% for k in keywords %}
+        <tr>
+            <td>{{ k.campaign.name }}</td>
+            <td>{{ k.adgroup.name }}</td>
+            <td><a href="{% url 'keyword' k.campaign.id k.adgroup.id k.id %}">{{ k.name }}</a></td>
+            <td>{{ k.bid }}</td>
+            <td>{{ k.impressions }}</td>
+            <td>{{ k.clicks }}</td>
+            <td>{{ k.order_amount_first_month }}</td>
+        </tr>
     {% endfor %}
+    </table>
 {% endif %}
-</table>
+
