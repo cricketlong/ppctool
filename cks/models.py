@@ -9,7 +9,7 @@ class Campaign(models.Model):
     
 class AdGroup(models.Model):
     class Meta:
-        db_table = "ad_group"
+        db_table = "adgroup"
 
     id = models.IntegerField(primary_key = True, default = 0)
     name = models.CharField(max_length = 255)
