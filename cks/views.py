@@ -61,7 +61,7 @@ def keyword(request, cid, agid, kid):
 
 def full_table(request):
     page = 1
-    num_per_page = 2
+    num_per_page = 20
 
     if 'page' in request.GET and len(request.GET['page']):
         page = int(request.GET['page'])
