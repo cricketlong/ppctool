@@ -1,5 +1,6 @@
 <style>
 table.solidblack {
+    width: 100%;
     border-collapse: collapse;
 }
 table.solidblack th,
@@ -43,5 +44,31 @@ table.solidblack td {
         </tr>
     {% endfor %}
 </table>
-{% endif %}
+<div style="text-align:center;">
+    <br>
+    {% if first_page %}
+    <a href="{% url 'full_table' %}?page={{ first_page }}">first</a>
+    {% endif %}
+    {% if prev_page %}
+    <a href="{% url 'full_table' %}?page={{ prev_page }}">prev</a>
+    {% endif %}
 
+    {% for n in numbers %}
+        {% if n == 0 %}
+            ......
+        {% elif n != cur_page %}
+        <a href="{% url 'full_table' %}?page={{ n }}">{{ n }}</a>
+        {% else %}
+            {{ n }}
+        {% endif %}
+    {% endfor %}
+
+    {% if next_page %}
+    <a href="{% url 'full_table' %}?page={{ next_page }}">next</a>
+    {% endif %}
+    {% if last_page %}
+    <a href="{% url 'full_table' %}?page={{ last_page }}">last</a>
+    {% endif %}
+</div>
+
+{% endif %}
