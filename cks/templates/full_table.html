@@ -1,9 +1,28 @@
-<a href="{% url 'index' %}">index</a>
-- full_table
-<br>
+<style>
+table.solidblack {
+    width: 100%;
+    border-collapse: collapse;
+}
+table.solidblack th,
+table.solidblack td {
+    border: 1px solid black;
+    text-align: center;
+}
+</style>
+
 {% if keywords %}
-    <br>
-    <table border="1">
+<form name="keyword-search" action="{% url 'full_table' %}" method="POST">
+{% csrf_token %}
+<table style="border-style:none;width:100%;">
+<tr>
+    <td style="text-align:left;">full table</td>
+    <td style="text-align:right;"><input type="text" name="keyword"/>&nbsp;<input type="submit" value="search" /></td>
+</tr>
+</table>
+</form>
+
+<br>
+<table class="solidblack">
     <tr>
         <td>campaign</td>
         <td>ad group</td>
@@ -11,7 +30,7 @@
         <td>bid</td>
         <td>impressions</td>
         <td>clicks</td>
-        <td>order_amount_first_month</td>
+        <td>order amount first month</td>
     </tr>
     {% for k in keywords %}
         <tr>
@@ -24,6 +43,30 @@
             <td>{{ k.order_amount_first_month }}</td>
         </tr>
     {% endfor %}
-    </table>
-{% endif %}
+</table>
+<div style="text-align:center;">
+    <br>
+    {% if pagination.first_page %}
+    <a href="{% url 'full_table' %}?page={{ pagination.first_page }}">first</a>
+    {% endif %}
+    {% if pagination.prev_page %}
+    <a href="{% url 'full_table' %}?page={{ pagination.prev_page }}">prev</a>
+    {% endif %}
 
+    {% for n in pagination.numbers %}
+        {% if n == pagination.cur_page %}
+            {{ n }}
+        {% else %}
+            <a href="{% url 'full_table' %}?page={{ n }}">{{ n }}</a>
+        {% endif %}
+    {% endfor %}
+
+    {% if pagination.next_page %}
+    <a href="{% url 'full_table' %}?page={{ pagination.next_page }}">next</a>
+    {% endif %}
+    {% if pagination.last_page %}
+    <a href="{% url 'full_table' %}?page={{ pagination.last_page }}">last</a>
+    {% endif %}
+</div>
+
+{% endif %}
