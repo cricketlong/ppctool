@@ -61,7 +61,7 @@ def keyword(request, cid, agid, kid):
 
 def full_table(request):
     page = 1
-    num_per_page = 20
+    num_per_page = 2
 
     if 'page' in request.GET and len(request.GET['page']):
         page = int(request.GET['page'])
@@ -75,18 +75,27 @@ def full_table(request):
     else:
         keywords = Keyword.objects.all()
 
-    first_page = 0
-    prev_page = 0
-    next_page = 0
-    page_number = int(len(keywords)/num_per_page)
-    if page <= 1:
+    pag = pagination(round(len(keywords)/num_per_page), num_per_page, page)
+    template = loader.get_template('full_table.html')
+    context = {
+        'keywords': keywords[(page - 1)*num_per_page:page*num_per_page],
+        'pagination': pag,
+    }
+
+    return HttpResponse(template.render(context, request))
+
+def pagination(page_number, num_per_page, page):
+    prev_page = page - 1
+    next_page = page + 1
+
+    if page < 1:
         page = 1
-    elif page >= page_number:
+        prev_page = 0
+    elif page > page_number:
         page = page_number
-    else:
-        prev_page = page - 1
-        next_page = page + 1
-        firts_page = 1
+
+    if page == page_number:
+        next_page = 0
 
     if page_number > 10:
         if page <= 4:
@@ -95,20 +104,16 @@ def full_table(request):
             numbers = range(page_number - 6, page_number + 1)
         else:
             numbers = range(page - 3, page + 4)
-        too_many_pages = True
     else:
         numbers = range(1, page_number + 1)
-        too_many_pages = False
 
-    template = loader.get_template('full_table.html')
-    context = {
-        'keywords': keywords[(page - 1)*num_per_page:page*num_per_page],
+    pagination = {
         'cur_page': page,
+        'first_page': 1,
+        'last_page': page_number,
         'prev_page': prev_page,
         'next_page': next_page,
-        'first_page': first_page,
-        'last_page': page_number,
-        'numbers': numbers,
+        'numbers': numbers
     }
 
-    return HttpResponse(template.render(context, request))
+    return pagination

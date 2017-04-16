@@ -46,28 +46,26 @@ table.solidblack td {
 </table>
 <div style="text-align:center;">
     <br>
-    {% if first_page %}
-    <a href="{% url 'full_table' %}?page={{ first_page }}">first</a>
+    {% if pagination.first_page %}
+    <a href="{% url 'full_table' %}?page={{ pagination.first_page }}">first</a>
     {% endif %}
-    {% if prev_page %}
-    <a href="{% url 'full_table' %}?page={{ prev_page }}">prev</a>
+    {% if pagination.prev_page %}
+    <a href="{% url 'full_table' %}?page={{ pagination.prev_page }}">prev</a>
     {% endif %}
 
-    {% for n in numbers %}
-        {% if n == 0 %}
-            ......
-        {% elif n != cur_page %}
-        <a href="{% url 'full_table' %}?page={{ n }}">{{ n }}</a>
-        {% else %}
+    {% for n in pagination.numbers %}
+        {% if n == pagination.cur_page %}
             {{ n }}
+        {% else %}
+            <a href="{% url 'full_table' %}?page={{ n }}">{{ n }}</a>
         {% endif %}
     {% endfor %}
 
-    {% if next_page %}
-    <a href="{% url 'full_table' %}?page={{ next_page }}">next</a>
+    {% if pagination.next_page %}
+    <a href="{% url 'full_table' %}?page={{ pagination.next_page }}">next</a>
     {% endif %}
-    {% if last_page %}
-    <a href="{% url 'full_table' %}?page={{ last_page }}">last</a>
+    {% if pagination.last_page %}
+    <a href="{% url 'full_table' %}?page={{ pagination.last_page }}">last</a>
     {% endif %}
 </div>
 
