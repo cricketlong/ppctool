@@ -1,9 +1,27 @@
-<a href="{% url 'index' %}">index</a>
-- full_table
-<br>
+<style>
+table.solidblack {
+    border-collapse: collapse;
+}
+table.solidblack th,
+table.solidblack td {
+    border: 1px solid black;
+    text-align: center;
+}
+</style>
+
 {% if keywords %}
-    <br>
-    <table border="1">
+<form name="keyword-search" action="{% url 'full_table' %}" method="POST">
+{% csrf_token %}
+<table style="border-style:none;width:100%;">
+<tr>
+    <td style="text-align:left;">full table</td>
+    <td style="text-align:right;"><input type="text" name="keyword"/>&nbsp;<input type="submit" value="search" /></td>
+</tr>
+</table>
+</form>
+
+<br>
+<table class="solidblack">
     <tr>
         <td>campaign</td>
         <td>ad group</td>
@@ -11,7 +29,7 @@
         <td>bid</td>
         <td>impressions</td>
         <td>clicks</td>
-        <td>order_amount_first_month</td>
+        <td>order amount first month</td>
     </tr>
     {% for k in keywords %}
         <tr>
@@ -24,6 +42,6 @@
             <td>{{ k.order_amount_first_month }}</td>
         </tr>
     {% endfor %}
-    </table>
+</table>
 {% endif %}
 

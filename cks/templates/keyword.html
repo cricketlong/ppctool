@@ -1,11 +1,21 @@
-<a href="{% url 'index' %}">index</a>
+<style>
+table.solidblack {
+    border-collapse: collapse;
+}
+table.solidblack th,
+table.solidblack td {
+    border: 1px solid black;
+    text-align: center;
+}
+</style>
+<a href="{% url 'compare' %}">home</a>
 {% if campaign %} - <a href="{% url 'campaign' campaign.id %}">{{ campaign.name }}</a>{% endif %}
 {% if adgroup %} &gt; <a href="{% url 'adgroup' campaign.id adgroup.id %}">{{ adgroup.name }}</a>{% endif %}
 {% if keyword %} &gt; {{ adgroup.name }}{% endif %}
 <br>
 {% if keyword %}
     <br>
-    <table border="1">
+    <table class="solidblack">
     <tr>
         <td>campaign</td>
         <td>ad group</td>
@@ -13,7 +23,7 @@
         <td>bid</td>
         <td>impressions</td>
         <td>clicks</td>
-        <td>order_amount_first_month</td>
+        <td>order amount first month</td>
     </tr>
     <tr style="background-color:grey">
         <td>{{ campaign.name }}</td>

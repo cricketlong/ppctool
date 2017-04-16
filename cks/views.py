@@ -3,8 +3,17 @@ from django.template import loader
 from .models import Campaign, AdGroup, Keyword
 
 def index(request):
-    campaigns = Campaign.objects.all()
+    #campaigns = Campaign.objects.all()
     template = loader.get_template('index.html')
+    context = {
+        #'campaigns': campaigns,
+    }
+
+    return HttpResponse(template.render(context, request))
+
+def compare(request):
+    campaigns = Campaign.objects.all()
+    template = loader.get_template('compare.html')
     context = {
         'campaigns': campaigns,
     }
@@ -51,7 +60,11 @@ def keyword(request, cid, agid, kid):
     return HttpResponse(template.render(context, request))
 
 def full_table(request):
-    keywords = Keyword.objects.all()
+    if 'keyword' in request.POST and len(request.POST['keyword']):
+        keyword = request.POST['keyword']
+        keywords = Keyword.objects.filter(name=keyword)
+    else:
+        keywords = Keyword.objects.all()
     template = loader.get_template('full_table.html')
     context = {
         'keywords': keywords,
